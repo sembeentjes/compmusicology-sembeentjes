@@ -51,13 +51,11 @@ interactive_plot_bendsvscomputer <- ggplotly(bendscomputer_plot)
 
 ```
 
-
 ### Chroma and Timbre analysis of "Paranoid Android"
 
 Because Paranoid Android is one of the biggest hits of Rahiohead's OK Computer album, as well as being one of their most experimental songs, being over 6 minutes long and not really having a traditional or expected structure, I decided to look at this song and draw a spectogram for both the chroma and the timbre.
 The spectogram for the chroma is very interesting, as it shows that the experimental features of the song heavily influence the key changes, and that there are more than four different keys that the song is at different points.
 The timbre spectogram is less interesting, as no real conclusions can be drawn from it. The timbre of the song is fairly consistent and, besides the first guitar solo, there are no real deviations during the song.
-
 
 ### Introduction
 
