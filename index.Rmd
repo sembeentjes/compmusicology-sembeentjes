@@ -49,7 +49,67 @@ bendscomputer_plot <- ggplot(bends_vs_computer, aes(valence, tempo, size = loudn
   
 interactive_plot_bendsvscomputer <- ggplotly(bendscomputer_plot)
 
+kid_a <- get_playlist_audio_features("", "7h8g0HLDFVc4YOnZuyn83s?si=e6e0b0179cce46d5")
+amnesiac <- get_playlist_audio_features("", "48VcKYl1HHCLyQI24jiwpn?si=26e3d2c26e6945b8")
+
+
+kida_vs_amnesiac <-
+  bind_rows(
+    kid_a |> mutate(category = "Kid A"),
+    amnesiac |> mutate(category = "Amnesiac"))
+
+kida_amnesiac_histo <- ggplot(kida_vs_amnesiac, aes(valence, fill = key_name)) +
+  geom_histogram() +
+  facet_wrap(~ category) +
+  theme_light()
+
+ggplotly(kida_amnesiac_histo)
+
+kida_amnesiac_point <- ggplot(kida_vs_amnesiac, aes(valence, acousticness, fill = key_name, color = key_name)) +
+  geom_point() +
+  facet_wrap(~ category) +
+  theme_light()
+
+ggplotly(kida_amnesiac_point)
+
+
 ```
+
+### Kid A and Amnesiac, histogram
+
+The next two albums i'd like to compare, are Kid A (2000) and Amnesiac (2001). These two albums are interesting, because they were recorded during the same period and were originally meant to be one big album together. But eventually, it was decided that it would be better to turn them into two separate albums, which lead to Kid A receiving a lot of praise worldwide, since it was (again) very experimental and different. Amnesiac was a but less popular when it was released, almost seen as a slight step back towards more traditional rock stuff (though there are still lots of experimental songs on it). So, let's compare these albums and see if we can conclude anything about the keys used in the albums.
+
+```{r, echo=FALSE}
+
+ggplotly(kida_amnesiac_histo)
+
+```
+
+***
+
+In this histogram, where the color of the bars indicated the key any given song is in, and the count indicated the amount of songs with the same (or very similar) valence score. Noteworthy is that the amount of low-valence songs is higher in Amnesiac, which would support the overall idea that Amnesiac is less experimental than Kid A.
+
+***
+
+Also, I think it is interesting that Amnesiac's two high-valence songs are in the keys of G and C, while those keys are also used by two of the four high-valence songs in Kid A. And while G seems to be a commonly used key in both albums, C is only used twice, both in high-valence songs. So, just on the basis of these two albums, you might say Radiohead likes to experiment in the key of C.
+
+### Kid A and Amnesiac, second graph
+
+After the histogram, there is still a part of the comparison that we haven't really looked at, and that is whether it's possible to tell from Spotify analysis features if these albums would've made a good album if merged together.
+
+```{r, echo=FALSE}
+
+ggplotly(kida_amnesiac_point)
+
+```
+
+***
+
+In this plot, I've compared Kid A and Amnesiac on basis of valence vs acousticness, with the color once again being the key. I wanted to use the color for key again, mostly to compare those two songs in the key of C with high-valence scores, and now I can see that they are not only close in valence, but also in acousticness. So, Radiohead likes to experiment with acoustic, high-valence music when in the key of C (on basis of these two albums).
+
+***
+
+The acousticness is very similar in both albums, with a very comparable spread on the y-axis of this plot. This supports the idea that these albums were originally meant to be released together, as combining the albums wouldn't really affect the acousticness balance of both albums. One thing that can be said is that Kid A's high-acousticness songs are slightly higher on the acousticness scale. 
 
 ### Chroma and Timbre analysis of "Paranoid Android"
 
