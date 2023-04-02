@@ -91,6 +91,14 @@ I'm largely expecting the biggest differences to be between The Bends (1995) and
 
 I also expect the comparisons between individual songs to be more interesting than the comparisons between albums, mostly because the graphs I will use to compare albums are less telling than graphs such as chromagrams and ceptograms.
 
+
+
+***
+
+```{r picture, echo=FALSE, fig.cap="Radiohead logo", out.width= '100%'}
+knitr::include_graphics("radiohead.jpg")
+```
+
 ### Comparing the albums The Bends (1995) and OK Computer (1997)
 
 Let's start with the two albums I expect will showcase the biggest change in Radiohead's style, The Bends, which is seen as a bit more of a traditional rock album, and OK Computer, which was seen as groundbreaking when it was released and in large part gave Radiohead their reputation for experimental music.
@@ -100,6 +108,17 @@ Let's start with the two albums I expect will showcase the biggest change in Rad
 
 interactive_plot_bendsvscomputer
 
+```
+
+***
+
+```{r picture 2, echo=FALSE, fig.cap="OK Computer album cover", out.width= '100%'}
+knitr::include_graphics("okcomputer.jpg")
+```
+
+
+```{r picture 3, echo=FALSE, fig.cap="The Bends album cover", out.width= '100%'}
+knitr::include_graphics("thebends.png")
 ```
 
 ***
@@ -125,6 +144,18 @@ ggplotly(kida_amnesiac_histo)
 
 ggplotly(kida_amnesiac_point)
 
+```
+
+***
+
+```{r picture 4, echo=FALSE, fig.cap="Kid A album cover", out.width= '100%'}
+knitr::include_graphics("kid a.png")
+```
+
+***
+
+```{r picture 5, echo=FALSE, fig.cap="Amnesiac album cover", out.width= '100%'}
+knitr::include_graphics("amnesiac.png")
 ```
 
 ***
@@ -407,7 +438,57 @@ While these graphs show that the timbre is very similar and consistent throughou
 
 Another interesting visualization is in the ending of Subterranean Homesick Alien, where it seems like the timbre changes quite drastically. This is because the song ends in a very unexpected way, with the last note ringing for quite a while, only accompanied by some white noise.
 
+### Comparing loudness between Creep and Paranoid Android
 
+Because Creep has shown in a previous comparison to be very consistent in terms of timbre, while Paranoid Android has shown to be very experimental, I wanted to compare these two in terms of loudness. I think comparing two songs that should be about the furthest apart in terms of style will show the shift Radiohead went through quite nicely.
+
+```{r, echo=FALSE}
+
+loud_creep <-
+  get_tidy_audio_analysis("70LcF31zb1H0PyJoS1Sx1r?si=17101d8693cd4510") |>
+  select(segments) |>
+  unnest(segments)
+
+loud_creep |>
+  mutate(loudness_max_time = start + loudness_max_time) |>
+  arrange(loudness_max_time) |>
+  mutate(delta_loudness = loudness_max - lag(loudness_max)) |>
+  ggplot(aes(x = loudness_max_time, y = pmax(0, delta_loudness))) +
+  geom_line() +
+  xlim(0, 30) +
+  theme_minimal() +
+  labs(x = "Time (s)", y = "Loudness") +
+  ggtitle("Creep")
+
+loud_android <-
+  get_tidy_audio_analysis("6LgJvl0Xdtc73RJ1mmpotq?si=efd225df8e1d462a") |>
+  select(segments) |>
+  unnest(segments)
+
+loud_android |>
+  mutate(loudness_max_time = start + loudness_max_time) |>
+  arrange(loudness_max_time) |>
+  mutate(delta_loudness = loudness_max - lag(loudness_max)) |>
+  ggplot(aes(x = loudness_max_time, y = pmax(0, delta_loudness))) +
+  geom_line() +
+  xlim(0, 30) +
+  theme_minimal() +
+  labs(x = "Time (s)", y = "Loudness") +
+  ggtitle("Paranoid Android")
+
+```
+
+***
+
+Once again, Creep seems to be very consistent throughout the entire song. The loudness doesn't change very much in the segment that was plotted, which makes sense because the song is mostly average loudness (compared to my other Spotify listening habits)
+
+***
+
+Paranoid Android is actually pretty quiet, aside from a little bit of a loudness spike towards the start of my selected segment. Paranoid Android actually has a lot of quiet segments, but being experimental as it is it also has two pretty distorted guitar solos.
+
+***
+
+I think this comparison shows nicely that the more experimental songs of Radiohead are less consistent in terms of loudness, while the older, more traditional rock songs are very consistent in loudness.
 
 ### Discussion and Conclusion
 
@@ -422,3 +503,9 @@ Conclusion
 Overall, it is definitely possible to show the changes in Radiohead's style throughout the years using Spotify's analysis features. The plots comparing separate albums are interesting, though a lot of artist's music changes in terms of loudness and acousticness between albums. I think the chroma- and ceptograms tell a more interesting story for Radiohead's style. Their older songs are more structured, have less key changes and also change up the tempo less. These are all features of music that are viewed to make a piece of music more experimental, and they definitely showed that later Radiohead songs are more experimental than songs from their first two albums.
 
 The biggest stylistic change seems to be between The Bends and OK Computer, though as I stated earlier, plots between albums are less useful for my corpus than comparisons between individual songs. But the idea that the biggest stylistic change was between The Bends and OK Computer does line up with my assumption that OK Computer was a massive change in style for Radiohead, and I believe the succes of this album shaped Radiohead as a band and gave them their unique sound.
+
+The songs from OK Computer and In Rainbows, two more experimental albums, definitely show some more interesting and different features. For example, the chromagram comparison I did between Paranoid Android (OK Computer) and The Bends (The Bends) showed that Paranoid Android had more key changes and less of a dominant key the song was in. Also, in the timbre analysis of Creep (Pablo Honey) and Jigsaw Falling Into Place (In Rainbows), the timbre seemed to be a bit more consistent in Creep than in Jigsaw Falling Into Place, and generally speaking, a more consistent timbre could indicate a more familiar or standard piece of music. The completely different timbre towards the end of Jigsaw Falling Into Place that stays separate until the end of the song is also indicative of a more experimental piece of music.
+
+But I think the comparison between Subterranean Homesick Alien (OK Computer) and My Iron Lung (The Bends) also shows that there were some elements of the more experimental music of later Radiohead in those earlier, more standard albums. The start of My Iron Lung for example is very tonally different from the rest of the song, and I think that is a sign of Radiohead experimenting a bit to deviate from the real rock songs of earlier work, towards their great stylistic change that OK Computer turned out to be.
+
+All in all, I'd say OK Computer seems to indeed be a significant change in style of music by Radiohead, and the albums before that album are more traditionally rock music than their later work, which were the albums that really gave them that unique 'Radiohead' sound.
