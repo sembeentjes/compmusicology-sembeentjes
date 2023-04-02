@@ -16,6 +16,8 @@ library(tidyverse)
 library(flexdashboard)
 library(plotly)
 library(Cairo)
+library(compmus)
+library(knitr)
 
 thebends <- get_playlist_audio_features("", "3YGj8blWCJoTWfEngyKQAM?si=9752c01ddc294055")
 
@@ -73,55 +75,23 @@ kida_amnesiac_point <- ggplot(kida_vs_amnesiac, aes(valence, acousticness, fill 
 ggplotly(kida_amnesiac_point)
 
 
-```
 
-### Kid A and Amnesiac, histogram
-
-The next two albums i'd like to compare, are Kid A (2000) and Amnesiac (2001). These two albums are interesting, because they were recorded during the same period and were originally meant to be one big album together. But eventually, it was decided that it would be better to turn them into two separate albums, which lead to Kid A receiving a lot of praise worldwide, since it was (again) very experimental and different. Amnesiac was a but less popular when it was released, almost seen as a slight step back towards more traditional rock stuff (though there are still lots of experimental songs on it). So, let's compare these albums and see if we can conclude anything about the keys used in the albums.
-
-```{r, echo=FALSE}
-
-ggplotly(kida_amnesiac_histo)
 
 ```
-
-***
-
-In this histogram, where the color of the bars indicated the key any given song is in, and the count indicated the amount of songs with the same (or very similar) valence score. Noteworthy is that the amount of low-valence songs is higher in Amnesiac, which would support the overall idea that Amnesiac is less experimental than Kid A.
-
-***
-
-Also, I think it is interesting that Amnesiac's two high-valence songs are in the keys of G and C, while those keys are also used by two of the four high-valence songs in Kid A. And while G seems to be a commonly used key in both albums, C is only used twice, both in high-valence songs. So, just on the basis of these two albums, you might say Radiohead likes to experiment in the key of C.
-
-### Kid A and Amnesiac, second graph
-
-After the histogram, there is still a part of the comparison that we haven't really looked at, and that is whether it's possible to tell from Spotify analysis features if these albums would've made a good album if merged together.
-
-```{r, echo=FALSE}
-
-ggplotly(kida_amnesiac_point)
-
-```
-
-***
-
-In this plot, I've compared Kid A and Amnesiac on basis of valence vs acousticness, with the color once again being the key. I wanted to use the color for key again, mostly to compare those two songs in the key of C with high-valence scores, and now I can see that they are not only close in valence, but also in acousticness. So, Radiohead likes to experiment with acoustic, high-valence music when in the key of C (on basis of these two albums).
-
-***
-
-The acousticness is very similar in both albums, with a very comparable spread on the y-axis of this plot. This supports the idea that these albums were originally meant to be released together, as combining the albums wouldn't really affect the acousticness balance of both albums. One thing that can be said is that Kid A's high-acousticness songs are slightly higher on the acousticness scale. 
-
-### Chroma and Timbre analysis of "Paranoid Android"
-
-Because Paranoid Android is one of the biggest hits of Rahiohead's OK Computer album, as well as being one of their most experimental songs, being over 6 minutes long and not really having a traditional or expected structure, I decided to look at this song and draw a spectogram for both the chroma and the timbre.
-The spectogram for the chroma is very interesting, as it shows that the experimental features of the song heavily influence the key changes, and that there are more than four different keys that the song is at different points.
-The timbre spectogram is less interesting, as no real conclusions can be drawn from it. The timbre of the song is fairly consistent and, besides the first guitar solo, there are no real deviations during the song.
 
 ### Introduction
 
-Radiohead is an English alternative-rock band known mostly for their use of experimental soundscapes and abtract lyricism knowadays, but this wasn't always the case. Before the release of their third commercial album "OK Computer" in 1997, Radiohead made more guitar-centered, lyrically introspective music. OK Computer is largely believed to have laid the groundwork for their later, more experimental albums such as "Kid A" and "Hail to the Thief". But was this album really so groundbreaking for the band, or were there signs of more experimental interests within the bands earlier albums, when analysing them in Spotify? Or is it possible that Spotify altered some labels/genres because of the image Radiohead had already acquired before Spotify released in the first place? Looking at the audio feature for each of their albums, I hope to be able to showcase the change in Radioheads music throughout the years.
+Radiohead is an English alternative-rock band known mostly for their use of experimental soundscapes and abtract lyricism knowadays, but this wasn't always the case. Before the release of their third commercial album "OK Computer" in 1997, Radiohead made more guitar-centered, lyrically introspective music. OK Computer is largely believed to have laid the groundwork for their later, more experimental albums such as "Kid A" and "Amnesiac". But was this album really so groundbreaking for the band, or were there signs of more experimental interests within the bands earlier albums, when analysing them in Spotify? Or is it possible that those experimental sounds and features were always in Radiohead's arsenal, but only came out in a select few songs earlier on? Looking at the audio features for some of their albums and songs, I hope to be able to showcase the change in Radioheads music throughout the years.
 
-### Comparing the albums The Bends (1995) and OK Computer (1997), with Valence on the x-axis and Tempo on the y-axis
+### Assumptions
+
+I'm largely expecting the biggest differences to be between The Bends (1995) and OK Computer (1997), as this is widely seen as the biggest tonal shift for Radiohead's music. Not only is this universally seen as the biggest shift by musicians and pundits, but these two albums are also the two albums I have personally listened to the most. I listened to The Bends a lot a couple years ago when I was just looking for more rock music that I liked, and I only started to listen to other Radiohead albums a bit later on, because OK Computer was a bit too tonally different for my taste at first. But now I think it is my favorite albums, as my taste has changed just as Radiohead's style throughout the years.
+
+I also expect the comparisons between individual songs to be more interesting than the comparisons between albums, mostly because the graphs I will use to compare albums are less telling than graphs such as chromagrams and ceptograms.
+
+### Comparing the albums The Bends (1995) and OK Computer (1997)
+
+Let's start with the two albums I expect will showcase the biggest change in Radiohead's style, The Bends, which is seen as a bit more of a traditional rock album, and OK Computer, which was seen as groundbreaking when it was released and in large part gave Radiohead their reputation for experimental music.
 
 
 ```{r, echo=FALSE}
@@ -142,3 +112,311 @@ In the graph, the albums are compared on tempo and validity, with the size of th
 ***
 
 Also noteworthy is that the tempo on OK Computer seems to be lower than the tempo on The Bends, which supports the notion that The Bends was more of a rock album than OK Computer. Lastly, the amount of songs in a minor vs major key are not significally different between the albums, with The Bends having 3 out of their 12 songs in a minor key and OK Computer having 4 out of their 12 songs being in minor key.
+
+### Kid A (2000) and Amnesiac (2001) comparison
+
+The next two albums i'd like to compare, are Kid A (2000) and Amnesiac (2001). These two albums are interesting, because they were recorded during the same period and were originally meant to be one big album together. But eventually, it was decided that it would be better to turn them into two separate albums, which lead to Kid A receiving a lot of praise worldwide, since it was (again) very experimental and different. Amnesiac was a but less popular when it was released, almost seen as a slight step back towards more traditional rock stuff (though there are still lots of experimental songs on it). So, let's compare these albums and see if we can conclude anything about the keys used in the albums.
+
+```{r, echo=FALSE}
+
+ggplotly(kida_amnesiac_histo)
+
+ggplotly(kida_amnesiac_point)
+
+```
+
+***
+
+In the histogram, where the color of the bars indicated the key any given song is in, and the count indicated the amount of songs with the same (or very similar) valence score. Noteworthy is that the amount of low-valence songs is higher in Amnesiac, which would support the overall idea that Amnesiac is less experimental than Kid A.
+
+***
+
+Also, I think it is interesting that Amnesiac's two high-valence songs are in the keys of G and C, while those keys are also used by two of the four high-valence songs in Kid A. And while G seems to be a commonly used key in both albums, C is only used twice, both in high-valence songs. So, just on the basis of these two albums, you might say Radiohead likes to experiment in the key of C.
+
+***
+
+After the histogram, there is still a part of the comparison that we haven't really looked at, and that is whether it's possible to tell from Spotify analysis features if these albums would've made a good album if merged together.
+
+In the second plot, I've compared Kid A and Amnesiac on basis of valence vs acousticness, with the color once again being the key. I wanted to use the color for key again, mostly to compare those two songs in the key of C with high-valence scores, and now I can see that they are not only close in valence, but also in acousticness. So, Radiohead likes to experiment with acoustic, high-valence music when in the key of C (on basis of these two albums).
+
+***
+
+The acousticness is very similar in both albums, with a very comparable spread on the y-axis of this plot. This supports the idea that these albums were originally meant to be released together, as combining the albums wouldn't really affect the acousticness balance of both albums. One thing that can be said is that Kid A's high-acousticness songs are slightly higher on the acousticness scale. 
+
+### Chroma analysis of "Paranoid Android" and "The Bends"
+
+```{r, include=FALSE}
+
+android <- get_tidy_audio_analysis("6LgJvl0Xdtc73RJ1mmpotq?si=efd225df8e1d462a") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches)
+
+bends <- get_tidy_audio_analysis("7oDFvnqXkXuiZa1sACXobj?si=608c0b43eaee4f25") |>
+  select(segments) |>
+  unnest(segments) |>
+  select(start, duration, pitches)
+
+```
+
+```{r, echo=FALSE}
+
+android |>
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  compmus_gather_chroma() |> 
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c() +
+  ggtitle("Paranoid Android")
+
+bends |>
+  mutate(pitches = map(pitches, compmus_normalise, "euclidean")) |>
+  compmus_gather_chroma() |> 
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = pitch_class,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  theme_minimal() +
+  scale_fill_viridis_c() +
+  ggtitle("The Bends")
+
+```
+
+
+
+***
+
+Because Paranoid Android is one of the biggest hits of Rahiohead's OK Computer album, as well as being one of their most experimental songs, being over 6 minutes long and not really having a traditional or expected structure, I decided to look at this song and draw a chromagram for this song.
+The chromagram for the chroma is very interesting, as it shows that the experimental features of the song heavily influence the key changes, and that there are more than four different keys that the song is at different points.
+It is also very difficult to use the chromagram what key the song is primarily in, but it seems to start out in F, with G, A and C seeming to have some of their own sections.
+
+***
+
+An interesting fact about this song is that lead singer Thom Yorke has stated in multiple interviews that the song's structure is heavily influenced by the Beatles song "Happiness is a Warm Gun", which has also been described as a sort of collection of multiple, shorter songs.
+
+
+***
+
+The Bends, from the album with the same name, is a lot more of a "traditional" rock song, and less experimental than Paranoid Android for example. This song was written and recorded during an earlier phase of the band, which probably explains the more standard structure, as Radiohead were still trying to find their own sound and seemed to be more influenced by the music they listened to themselves.
+This more standard structure is definitely present in the chromagram I've constructed, as it seems a lot less cluttered than Paranoid Android was. It is also easier to tell what keys are used in this song, which seem to be primarily C and G.
+
+***
+
+When comparing these two songs, it is clear that Paranoid Android was written to be more experimental, but that doesn't mean that The Bends is a standard rock song in terms of chroma or structure, there still seems to be at least one key change, which isn't always the case for rock songs.
+
+
+### Comparing the Timbre of Creep (1992) and Jigsaw Falling Into Place (2007)
+
+Creep, arguably Radiohead's biggest ever hit, is one of the first singles the band ever released, and it has some elements of what later became Radiohead's sound, but it's definitely more like a pop song, in both stucture and chroma.
+Jigsaw Falling Into Place was one of the songs of 2007's In Rainbows, and in 2007 Radiohead had already really found their own sound, but the instuments used in this song are not that different from those in Creep. Therefore, I've decided to make a timre analysis of the two songs, to see if Spotify can find this unique Radiohead sound, even when the instruments used are very similar.
+
+```{r, include=FALSE}
+
+creep <-
+  get_tidy_audio_analysis("70LcF31zb1H0PyJoS1Sx1r?si=17101d8693cd4510") |>
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  )
+
+
+jigsaw <-
+  get_tidy_audio_analysis("0YJ9FWWHn9EfnN0lHwbzvV?si=d8d422839a224035") |>
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  )
+```
+
+```{r, echo=FALSE}
+creep |>
+  compmus_gather_timbre() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = basis,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  scale_fill_viridis_c() +                              
+  theme_classic() +
+  ggtitle("Creep")
+
+jigsaw |>
+  compmus_gather_timbre() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = basis,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  scale_fill_viridis_c() +                              
+  theme_classic() +
+  ggtitle("Jigsaw Falling Into Place")
+
+```
+
+
+
+***
+
+Though the timbre is somewhat similar between the two ceptograms, what is interesting is that the timbre in Jigsaw Falling Into Place seems to change a lot more significantly, without changing back to the original timbre. In Creep, the timbre also changes a couple times, but it falls back into the original timbre pretty soon afterwards. 
+
+***
+
+This supports the idea that Creep is more of a standard pop song in structure, as the changes in timbre fade back into the overall timbre, which is the same throughout the song. In Jigsaw, the timbre changes and continues in this new fashion, which makes sense as it is a but more of an experimental and less traditionally structured song.
+
+### Comparing Subterranean Homesick Alien (1997) and My Iron Lung (1995)
+
+Subterranean Homesick Alien is another experimental song from OK Computer that recieved a lot of praise for its uniqueness and experimentalness, whilst My Iron Lung is a song from The Bends that is on the more unique and experimental side of that album. I wanted to compare these songs to see if the older experimental songs of Radiohead are comparable to the really experimental songs they've released, and I think timbre could provide the best visual differences.
+
+```{r, include=FALSE}
+alien <-
+  get_tidy_audio_analysis("2CVV8PtUYYsux8XOzWkCP0?si=47b7fcb0e6ca4188") |>
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  )
+
+ironlung <-
+  get_tidy_audio_analysis("0jyikFM0Umv0KlnrOEKtTG?si=41cebfbbb2d84a2b") |>
+  compmus_align(bars, segments) |>                     # Change `bars`
+  select(bars) |>                                      #   in all three
+  unnest(bars) |>                                      #   of these lines.
+  mutate(
+    pitches =
+      map(segments,
+        compmus_summarise, pitches,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  ) |>
+  mutate(
+    timbre =
+      map(segments,
+        compmus_summarise, timbre,
+        method = "rms", norm = "manhattan"              # Change summary & norm.
+      )
+  )
+```
+
+```{r, echo=FALSE}
+alien |>
+  compmus_gather_timbre() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = basis,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  scale_fill_viridis_c() +                              
+  theme_classic() +
+  ggtitle("Subterranean Homesick Alien")
+
+ironlung |>
+  compmus_gather_timbre() |>
+  ggplot(
+    aes(
+      x = start + duration / 2,
+      width = duration,
+      y = basis,
+      fill = value
+    )
+  ) +
+  geom_tile() +
+  labs(x = "Time (s)", y = NULL, fill = "Magnitude") +
+  scale_fill_viridis_c() +                              
+  theme_classic() +
+  ggtitle("My Iron Lung")
+
+```
+
+
+
+***
+
+While these graphs show that the timbre is very similar and consistent throughout both songs, one thing that interested me immediately is that the start of My Iron Lung seems to have a very different timbre than the rest of the song. This is also somewhat expected, because the primary reason I wanted to take a look at this song was because of the start of the song, which sounds a lot like something from OK Computer to me.
+
+***
+
+Another interesting visualization is in the ending of Subterranean Homesick Alien, where it seems like the timbre changes quite drastically. This is because the song ends in a very unexpected way, with the last note ringing for quite a while, only accompanied by some white noise.
+
+
+
+### Discussion and Conclusion
+
+Discussion
+
+Of course this portfolio is still dependent on Spotify's analysis features and those can be a little but strange sometimes, especially in terms of timbre. The plots used are of course not as clear for answering the questions I posed in the Introduction as a statistical analysis could have been, but that can be the difficulty in researching in music, there is not always a way to analyse data in an objective fashion, as music itself is subjective in nature.
+
+I think the experimentalness of music is especially subjective, as you could argue every genre has been defined as experimental at one point in history. The thing I was interested in was of course mostly the changes Radiohead has gone through to get to where they currently are, and I think this portfolio showcases these changes nicely. However, am I really able to say Radiohead's music is more experimental now than it was in their early days? That is, of course, also subjective and will realistically stay subjective forever.
+
+Conclusion
+
+Overall, it is definitely possible to show the changes in Radiohead's style throughout the years using Spotify's analysis features. The plots comparing separate albums are interesting, though a lot of artist's music changes in terms of loudness and acousticness between albums. I think the chroma- and ceptograms tell a more interesting story for Radiohead's style. Their older songs are more structured, have less key changes and also change up the tempo less. These are all features of music that are viewed to make a piece of music more experimental, and they definitely showed that later Radiohead songs are more experimental than songs from their first two albums.
+
+The biggest stylistic change seems to be between The Bends and OK Computer, though as I stated earlier, plots between albums are less useful for my corpus than comparisons between individual songs. But the idea that the biggest stylistic change was between The Bends and OK Computer does line up with my assumption that OK Computer was a massive change in style for Radiohead, and I believe the succes of this album shaped Radiohead as a band and gave them their unique sound.
