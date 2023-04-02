@@ -79,11 +79,13 @@ ggplotly(kida_amnesiac_point)
 
 ```
 
-### Introduction
+### Introduction and Assumptions
+
+Introduction
 
 Radiohead is an English alternative-rock band known mostly for their use of experimental soundscapes and abtract lyricism knowadays, but this wasn't always the case. Before the release of their third commercial album "OK Computer" in 1997, Radiohead made more guitar-centered, lyrically introspective music. OK Computer is largely believed to have laid the groundwork for their later, more experimental albums such as "Kid A" and "Amnesiac". But was this album really so groundbreaking for the band, or were there signs of more experimental interests within the bands earlier albums, when analysing them in Spotify? Or is it possible that those experimental sounds and features were always in Radiohead's arsenal, but only came out in a select few songs earlier on? Looking at the audio features for some of their albums and songs, I hope to be able to showcase the change in Radioheads music throughout the years.
 
-### Assumptions
+Assumptions
 
 I'm largely expecting the biggest differences to be between The Bends (1995) and OK Computer (1997), as this is widely seen as the biggest tonal shift for Radiohead's music. Not only is this universally seen as the biggest shift by musicians and pundits, but these two albums are also the two albums I have personally listened to the most. I listened to The Bends a lot a couple years ago when I was just looking for more rock music that I liked, and I only started to listen to other Radiohead albums a bit later on, because OK Computer was a bit too tonally different for my taste at first. But now I think it is my favorite albums, as my taste has changed just as Radiohead's style throughout the years.
 
